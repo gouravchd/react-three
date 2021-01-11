@@ -19,6 +19,7 @@ import './App.css';
 import './App.scss';
 import { css } from "@emotion/core";
 import {ClipLoader,BarLoader} from "react-spinners";
+
 const override = css`
   display: block;
   margin: 0 auto;
