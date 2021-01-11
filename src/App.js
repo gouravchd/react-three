@@ -31,6 +31,7 @@ const override = css`
   right: 0;
   margin: auto;
 `;
+
 class App extends Component {
   constructor(props) {
     super(props);
