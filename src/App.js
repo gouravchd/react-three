@@ -69,7 +69,6 @@ class App extends Component {
   }
   render() {
     const { alert,loader } = this.props;
-  // console.log(alert);
     return (
       
       <div className={`app  ${this.state.sidebarToggle ? 'toggled' : ''}`}>
