@@ -62,7 +62,6 @@ class App extends Component {
     });
   }
   handleClick() {
-    //console.log(34);
     this.setState({
         sidebarPushCollapsed: !this.state.sidebarPushCollapsed
     });
