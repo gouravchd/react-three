@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Router, Route,Switch,BrowserRouter } from 'react-router-dom';
+import { Router, Route,Switch,BrowserRouter, withRouter } from 'react-router-dom';
 import {Login} from './components/auth/Login';
 import { Register } from './components/auth/Register';
 import {Home} from './components/Home/Home';
@@ -82,7 +82,7 @@ class App extends Component {
               />
               </div>
           }
-        <Router history={history} >
+        <Router history={history} forceRefresh={true}>
           {this.props.authentication.loggedIn && 
             <Sidebar sidebarPushCollapsed={this.state.sidebarPushCollapsed} sidebarToggle={this.state.sidebarToggle} onToggle={this.onToggle} />
           }

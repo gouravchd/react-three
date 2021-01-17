@@ -1,6 +1,6 @@
 import React,  {	Component} from 'react';
 import { connect } from 'react-redux';
-import {  Link } from 'react-router-dom';
+import {  Link ,withRouter,BrowserRouter as Router } from 'react-router-dom';
 import { userActions,loaderActions,alertActions } from '../../actions';
 import {history} from '../../helpers';
 import Footer from '../layout/Footer';
@@ -14,22 +14,38 @@ class Users extends Component {
 		super(props);
         this.state = {
             pageCount: 1,
-            forcePage:0,
+            initialPage : 0,
+            page : 1,
+            forcePage:null,
             records:[],
         };
-       // console.log(44);
+       
         this.handlePageClick = this.handleClick.bind(this);
+        this.loadUsers = this.loadUsers.bind(this);
     }
     componentDidMount() {
-        //console.log(34);
         const payload = {page:this.state.page, type:2};
-        //this.props.getUsers(payload);
+        this.loadUsers(payload,true);
+    }
+    componentDidUpdate(prevProps){
+    }
+    componentWillReceiveProps (prevProps){
+        if(prevProps.location.key!=this.props.location.key){
+            const payload = {page:this.state.page, type:2};
+            this.loadUsers(payload,true);
+        }
+    }
+    loadUsers(payload,initial=false) {
         this.props.fadeIn();
-		userService.get_users(payload)
+        userService.get_users(payload)
         .then(
             data => {
-                console.log(data);
-                this.setState({pageCount:data.last_page,records:data.data});
+                this.setState({records:data.data,pageCount:data.last_page});
+                if(initial){
+                    this.setState({forcePage:0});
+                } else {
+                    this.setState({forcePage:payload.page-1});
+                }
                 this.props.fadeOut();
             },
             error => {
@@ -37,23 +53,11 @@ class Users extends Component {
             }
         );
     }
+
     handleClick(e) {
-        //console.log(e.selected);
         const page = e.selected+1;
         const payload = {page:page,type:2};
-        //this.props.getUsers(payload);
-        //this.props.getSample();
-        this.props.fadeIn();
-		userService.get_users(payload)
-			.then(
-				data => {
-                    this.setState({records:data.data});
-                    this.props.fadeOut();
-				},
-				error => {
-                    this.props.fadeOut();
-				}
-			);
+        this.loadUsers(payload,false);
     }
 	render() {
         const { loggingIn,response } = this.props;
@@ -78,7 +82,12 @@ class Users extends Component {
                             <div className="row">
                                 <div className="col-12">
                                     <div className="card">
-                                    <div className="card-header bg-primary text-white">Users List</div>
+                                        <div className="card-header bg-primary text-white">
+                                            <div className="pull-left">Users List</div>
+                                            <div className="pull-right">
+                                                    <Link to="/users" className="btn btn-warning btn-sm" >Add User</Link>
+                                            </div>
+                                        </div>
                                         <div className="card-body">
                                         <table className="table table-bordered">
                                             <thead>
@@ -105,6 +114,7 @@ class Users extends Component {
                                             breakLabel={'...'}
                                             breakClassName={'break-me'}
                                             pageCount={this.state.pageCount}
+                                           // initialPage={this.state.initialPage}
                                             marginPagesDisplayed={2}
                                             pageRangeDisplayed={5}
                                             onPageChange={e => this.handlePageClick(e)}
@@ -133,6 +143,7 @@ class Users extends Component {
 	}
 
 }
+
 function sampleFunc(){
    const data = [];
    return {

@@ -14,7 +14,6 @@ class Sidebar extends Component {
     }
     render() {
         const { alert,loader } = this.props;
-        console.log(this.props.sidebarToggle);
         return (
             <>
 			<ProSidebar collapsed={this.props.sidebarPushCollapsed} toggled={this.props.sidebarToggle} onToggle={this.props.onToggle} rtl={false} breakPoint="md">
@@ -25,7 +24,7 @@ class Sidebar extends Component {
 					<Menu iconShape="square">
 						<MenuItem icon={<FaBattleNet />}>Dashboard <Link to="/login" /></MenuItem>
 						<SubMenu title="Users" icon={<FaBluetoothB />}>
-						<MenuItem>Customers <Link to="/users" /></MenuItem>
+						<MenuItem>Customers <Link to={{pathname: '/users'}} replace /></MenuItem>
 						<MenuItem>Component 2</MenuItem>
 						</SubMenu>
 					</Menu>
