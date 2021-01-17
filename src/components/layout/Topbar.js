@@ -40,8 +40,8 @@ class TopBar extends Component {
                         <div className="navbar-collapse">
 
                         <ul className="navbar-nav mr-auto mt-md-0">
-                            <li className="nav-item"> <a role="button" tabindex="0" onClick={this.props.handleClickMob} className="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" ><i className="mdi mdi-menu" /></a> </li>
-                            <li className="nav-item m-l-10"> <a role="button" tabindex="0" onClick={this.props.handleClick} className="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark"><i className="ti-menu" /></a> </li>
+                            <li className="nav-item"> <a role="button" tabIndex="0" onClick={this.props.handleClickMob} className="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" ><i className="mdi mdi-menu" /></a> </li>
+                            <li className="nav-item m-l-10"> <a role="button" tabIndex="0" onClick={this.props.handleClick} className="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark"><i className="ti-menu" /></a> </li>
                         </ul>
                         
                             <Nav className="" navbar>

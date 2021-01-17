@@ -32,7 +32,7 @@ class Categories extends Component {
     }
     componentWillReceiveProps (prevProps){
         if(prevProps.location.key!=this.props.location.key){
-            const payload = {page:this.state.page, type:2};
+            const payload = {page:this.state.page, type:20};
             this.loadRecords(payload,true);
         }
     }

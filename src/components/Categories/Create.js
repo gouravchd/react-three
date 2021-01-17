@@ -11,19 +11,28 @@ class CreateCategory extends Component {
 	constructor(props) {
 		super(props);
         this.state = {
-
+            form : {}
         };
-       
+        this.submitRecord = this.submit.bind(this);
+        this.handleInputChange = this.inputChange.bind(this);
     }
     componentDidMount() {
-
     }
     componentDidUpdate(prevProps){
     }
     componentWillReceiveProps (prevProps){
-
     }
-
+	inputChange(e) {
+		let name = e.target.name;
+		let value = e.target.value;
+		this.setState({[name]: value});
+	}
+    submit(e) {
+        e.preventDefault();
+        const { name , status} = this.state;
+        const data = new FormData(e.target);
+        console.log(data);
+    }
 	render() {
         const { records } = this.state;
 		return (
@@ -51,7 +60,33 @@ class CreateCategory extends Component {
                                             <div className="pull-left">Category Create</div>
                                         </div>
                                         <div className="card-body">
-                                        
+                                            <div className="col-6">
+                                            <form onSubmit={this.submitRecord}>
+                                                <div className="form-body">
+                                                    <div className="row">
+                                                        <div className="col-md-12">
+                                                            <div className="form-group">
+                                                            <label className="control-label">Name</label>
+                                                            <input type="text" id="name" className="form-control" placeholder="Name" name="name" onChange={this.handleInputChange} />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-12">
+                                                            <div className="form-group">
+                                                                <label className="control-label">Status</label>
+                                                                <select name="status" className="form-control" onChange={this.handleInputChange}>
+                                                                    <option value="1">Active</option>
+                                                                    <option value="0">In-Active</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="form-actions">
+                                                    <button type="submit" className="btn btn-success"> <i className="fa fa-check" /> Save</button>
+                                                    <Link to="/category/list" className="btn btn-info ml-2">Cancel</Link>
+                                                </div>
+                                            </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -60,6 +95,7 @@ class CreateCategory extends Component {
                         
                     </div>
                     <Footer />
+           
             </>
 		)
 	}
