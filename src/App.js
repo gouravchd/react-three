@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { Router, Route,Switch,BrowserRouter, withRouter } from 'react-router-dom';
 import {Login} from './components/auth/Login';
 import { Register } from './components/auth/Register';
-import {Home} from './components/Home/Home';
 import {Dashboard} from './components/Dashboard/Dashboard';
 import {Error} from './components/Error/Error';
-import {Logout} from './components/auth/Logout';
 import {Topbar} from './components/layout/Topbar';
 import {Sidebar} from './components/layout/Sidebar';
 import {ToastError} from './components/layout/ToastError';
@@ -14,7 +12,7 @@ import { PrivateRoute } from './components/PrivateRoute'
 import { PublicRoute } from './components/PublicRoute';
 import { connect } from 'react-redux';
 import { alertActions,loaderActions } from './actions';
-import {Users} from './components';
+import {Users, Categories, CreateCategory} from './components';
 import './App.css';
 import './App.scss';
 import { css } from "@emotion/core";
@@ -103,6 +101,8 @@ class App extends Component {
                 <PrivateRoute exact path="/" component={Dashboard} />
                 <PrivateRoute exact path="/users" component={Users} />
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                <PrivateRoute exact path="/category/list" component={Categories} />
+                <PrivateRoute exact path="/category/create" component={CreateCategory} />
                 <PublicRoute path="/login" component={Login} />
                 <PublicRoute path="/register" component={Register} />
                 <Route component={Error} />

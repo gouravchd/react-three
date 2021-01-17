@@ -23,9 +23,9 @@ class Sidebar extends Component {
 				<SidebarContent>
 					<Menu iconShape="square">
 						<MenuItem icon={<FaBattleNet />}>Dashboard <Link to="/login" /></MenuItem>
-						<SubMenu title="Users" icon={<FaBluetoothB />}>
-						<MenuItem>Customers <Link to={{pathname: '/users'}} replace /></MenuItem>
-						<MenuItem>Component 2</MenuItem>
+						<SubMenu title="Categories" icon={<FaBluetoothB />}>
+						<MenuItem>List Categories <Link to={{pathname: '/category/list'}} replace /></MenuItem>
+						<MenuItem>Add Category <Link to={{pathname: '/category/create'}} replace /></MenuItem>
 						</SubMenu>
 					</Menu>
 				</SidebarContent>

@@ -5,7 +5,8 @@ export const userService = {
 	login,
 	logout,
 	register,
-	get_users
+	get_users,
+	request
 };
 
 function login(email, password) {
@@ -48,6 +49,18 @@ function get_users(data) {
 		if(response.data.playlist && response.data.playlist){
 			return response.data.playlist;
 		}
+	})
+	.catch(handleResponse);
+}
+
+function request(payload) {
+	axios.interceptors.request.use((config) => {
+		return config;
+	});
+	axiosHeader();
+	return axios(payload)
+	.then(response => {
+		return response.data;
 	})
 	.catch(handleResponse);
 }
