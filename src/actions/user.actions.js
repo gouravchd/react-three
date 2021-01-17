@@ -11,6 +11,7 @@ export const userActions = {
 	getUsers,
 	fadeIn,
 	fadeOut,
+	error,
 };
 
 function login(email, password) {
@@ -29,7 +30,7 @@ function login(email, password) {
 					//console.log(error);
 					dispatch(loaderActions.fadeOut('Close'));
 					//dispatch(failure(String(error)));
-					dispatch(alertActions.error( String(error),'LOGIN' ));
+					dispatch(alertActions.error( String(error),'ALERT_ERROR','LOGIN' ));
 				}
 			);
 
@@ -44,6 +45,11 @@ function fadeIn() {
 function fadeOut() {
 	return dispatch => {
 		dispatch(loaderActions.fadeOut('Close'));
+	};
+}
+function error(message,type='ERROR',action,mode='inline') {
+	return dispatch => {
+		dispatch(alertActions.error(String(message),type, action, mode) );
 	};
 }
 function getUsers(data) {

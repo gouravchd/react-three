@@ -15,7 +15,7 @@ class ToastError extends Component {
        if(alert.mode=='toast' && alert.message){
             if(alert.type=='ALERT_ERROR'){
                 toast.error(alert.message);
-            } else if(alert.type=='ALERT_ERROR'){
+            } else if(alert.type=='ALERT_SUCCESS'){
                  toast.success(alert.message);
             } else {
                 toast(alert.message);

@@ -86,7 +86,7 @@ class App extends Component {
           }
           <main>
           {alert.action_type=='LOGIN' && alert.message &&
-            <div className={` ${alert.message ? 'd-block' : 'd-none'} mb-0 b-0 alert alert-dismissible fade show ${alert.type}`} role="alert">
+            <div className={` ${alert.message ? 'd-block' : 'd-none'} mb-0 b-0 alert alert-dismissible fade show ${alert.class}`} role="alert">
               {alert.message}
               <button type="button" className="close d-none" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">×</span>

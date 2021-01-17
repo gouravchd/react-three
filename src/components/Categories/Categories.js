@@ -1,13 +1,10 @@
 import React,  {	Component} from 'react';
 import { connect } from 'react-redux';
-import {  Link ,withRouter,BrowserRouter as Router } from 'react-router-dom';
-import { userActions,loaderActions,alertActions } from '../../actions';
-import {history} from '../../helpers';
+import {  Link  } from 'react-router-dom';
+import { userActions } from '../../actions';
 import Footer from '../layout/Footer';
 import {Error} from '../layout/Error';
 import {Paginate} from '../layout';
-
-import {store,appConstants } from '../../helpers';
 import { userService } from '../../services/user.service';
 class Categories extends Component {
 
@@ -31,8 +28,8 @@ class Categories extends Component {
     componentDidUpdate(prevProps){
     }
     componentWillReceiveProps (prevProps){
-        if(prevProps.location.key!=this.props.location.key){
-            const payload = {page:this.state.page, type:20};
+        if(prevProps.location.key!==this.props.location.key){
+            const payload = {page:this.state.page, type:2};
             this.loadRecords(payload,true);
         }
     }
@@ -53,6 +50,7 @@ class Categories extends Component {
             },
             error => {
                 this.props.fadeOut();
+                this.props.error(error,'ALERT_ERROR','CATEGORY','inline');
             }
         );
     }
@@ -133,6 +131,7 @@ function mapState(state) {
 const actionCreators = {
     fadeIn : userActions.fadeIn,
     fadeOut : userActions.fadeOut,
+    error : userActions.error,
 }
 
 const connected = connect(mapState, actionCreators)(Categories);

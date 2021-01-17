@@ -9,7 +9,7 @@ class Error extends Component {
     }
     render() {
         const { alert } = this.props;
-        console.log(alert);
+       // console.log(alert);
         return (
             <>
              {alert.mode=='inline' && alert.message &&
