@@ -30,3 +30,16 @@
   background: rgb(2, 2, 2,0.5);
   opacity: 0.9;
 }
+
+th.sortable {
+  position: relative;
+  cursor: pointer;
+}
+
+th.sortable:not(.asc):not(.desc)::after {
+  font-family: FontAwesome;
+  content: "\f0dc";
+  position: absolute;
+  right: 8px;
+  color: #999;
+}

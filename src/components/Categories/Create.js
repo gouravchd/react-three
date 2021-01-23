@@ -4,8 +4,9 @@ import {  Link  } from 'react-router-dom';
 import { userActions } from '../../actions';
 import Footer from '../layout/Footer';
 import {Error} from '../layout/Error';
-import ReactPaginate from 'react-paginate';
+import {Breadcrumb} from '../layout';
 import { userService } from '../../services/user.service';
+import { history } from '../../helpers';
 class CreateCategory extends Component {
 
 	constructor(props) {
@@ -21,6 +22,7 @@ class CreateCategory extends Component {
     componentDidUpdate(prevProps){
     }
     componentWillReceiveProps (prevProps){
+        document.getElementById("add").reset();
     }
 	inputChange(e) {
 		let name = e.target.name;
@@ -31,25 +33,34 @@ class CreateCategory extends Component {
         e.preventDefault();
         const { name , status} = this.state;
         const data = new FormData(e.target);
-        console.log(data);
+        const formObj = {};
+        for (var pair of data.entries()) {
+          formObj[pair[0]] = pair[1];
+        }
+        this.props.fadeIn();
+        const payloadObj = {method:'post','data':formObj,url:'/playlist/add'};
+        userService.request(payloadObj)
+        .then(
+            data => {
+                //const response = data.playlist;
+                console.log(data);
+                this.props.fadeOut();
+                history.replace('/category/list');
+            },
+            error => {
+                this.props.fadeOut();
+                this.props.error(error,'ALERT_ERROR','CATEGORY_Add','inline');
+            }
+        );
+       //console.log(data);
     }
 	render() {
         const { records } = this.state;
 		return (
             <>
                     <div className="page-wrapper col-12">
-                        <div className="row page-titles">
-                            <div className="col-md-5 align-self-center">
-                                <h3 className="text-themecolor" >Categories</h3>
-                            </div>
-                            <div className="col-md-7 align-self-center">
-                                <ol className="breadcrumb">
-                                <li className="breadcrumb-item"><a href="#" onClick={(e) => {e.preventDefault();}}>Home</a></li>
-                                <li className="breadcrumb-item">Category</li>
-                                <li className="breadcrumb-item active">Create</li>
-                                </ol>
-                            </div>
-                        </div>
+                        <Breadcrumb heading="Categories" title="Category" subtitle="Create" />
+
 
                         <div className="container-fluid">
                             <Error />
@@ -61,12 +72,12 @@ class CreateCategory extends Component {
                                         </div>
                                         <div className="card-body">
                                             <div className="col-6">
-                                            <form onSubmit={this.submitRecord}>
+                                            <form id="add" onSubmit={this.submitRecord}>
                                                 <div className="form-body">
                                                     <div className="row">
                                                         <div className="col-md-12">
                                                             <div className="form-group">
-                                                            <label className="control-label">Name</label>
+                                                            <label className="control-label">Name </label>
                                                             <input type="text" id="name" className="form-control" placeholder="Name" name="name" onChange={this.handleInputChange} />
                                                             </div>
                                                         </div>
@@ -109,6 +120,7 @@ function mapState(state) {
 const actionCreators = {
     fadeIn : userActions.fadeIn,
     fadeOut : userActions.fadeOut,
+    error : userActions.error,
 }
 
 const connected = connect(mapState, actionCreators)(CreateCategory);
