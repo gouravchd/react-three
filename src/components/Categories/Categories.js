@@ -33,6 +33,7 @@ class Categories extends Component {
             page_size : this.props.authentication.user.limit,
             records:[],
             payload:{page:1, type:2},
+            status_update : {}
         };
         this.columns = [
             {
@@ -54,7 +55,7 @@ class Categories extends Component {
                     return (
                         <>
                         <BootstrapSwitchButton
-                            checked={(record.status ? true : false)}
+                            checked={(this.state.status_update && this.state.status_update.id==record.id ? this.state.status_update.status : record.status ? true : false)}
                             onChange={this.updateRecord.bind(this, record, index)}
                             onlabel='Active'
                             width={100}
@@ -102,18 +103,13 @@ class Categories extends Component {
         }
     }
     updateRecord = (record, index) => {
-        console.log("Edit record", index, record.status);
         //this.props.fadeIn();
-        //this.props.error('error','ALERT_ERROR','STATUS_UPDATE','inline');
-        //this.props.fadeOut();
-        //return false;
-        //this.setState({records:[]});
-        this.props.fadeIn();
+        this.setState({status_update:{id:record.id,status:record.status ? false : true}});
         const formObj = {id:record.id,status:record.status ? 0 : 1};
         const payloadObj = {method:'post','data':formObj,url:'/playlist/add'};
         userService.request(payloadObj).then(
             data => {
-                this.props.fadeOut();
+                //this.props.fadeOut();
                 this.props.error(data.message,'ALERT_SUCCESS','STATUS_UPDATE','toast');
                 this.loadRecords(this.state.payload);
             },
