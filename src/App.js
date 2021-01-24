@@ -16,7 +16,7 @@ import {Users, Categories, CreateCategory} from './components';
 import './App.css';
 import './App.scss';
 import { css } from "@emotion/core";
-import {ClipLoader,BarLoader} from "react-spinners";
+import {ClipLoader,BarLoader, ClockLoader} from "react-spinners";
 
 const override = css`
   display: block;
@@ -72,9 +72,9 @@ class App extends Component {
           <ToastError />
           { loader.type && 
             <div className="sweet-loading">
-              <BarLoader
+              <ClockLoader
                 css={override}
-                size={150}
+                size={50}
                 color={"#123abc"}
                 loading={true}
               />

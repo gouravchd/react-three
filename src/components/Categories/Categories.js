@@ -5,12 +5,18 @@ import { userActions } from '../../actions';
 import Footer from '../layout/Footer';
 import {Error} from '../layout/Error';
 import {Breadcrumb} from '../layout';
-import {Paginate} from '../layout';
 import { userService } from '../../services/user.service';
 import $ from "jquery";
 import ReactDatatable from '@ashvin27/react-datatable';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react';
-import { history } from '../../helpers';
+import {
+    Nav,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+  } from 'reactstrap';
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 class Categories extends Component {
 
@@ -25,6 +31,7 @@ class Categories extends Component {
             }
         }
         this.state = {
+            is_confirm:false,
             pageCount: 1,
             initialPage : 0,
             page : 1,
@@ -33,7 +40,8 @@ class Categories extends Component {
             page_size : this.props.authentication.user.limit,
             records:[],
             payload:{page:1, type:2},
-            status_update : {}
+            status_update : {},
+            record_delete : []
         };
         this.columns = [
             {
@@ -71,6 +79,29 @@ class Categories extends Component {
                 key: "created_at",
                 text: "Created At",
                 sortable: true
+            },
+            {
+                key: "action",
+                text: "Action",
+                sortable: false,
+                cell: (record, index) => {
+                    return (
+                    <>
+                        <Nav className="mr-auto pull-right">
+                            <UncontrolledDropdown nav inNavbar>
+                            <DropdownToggle nav caret>
+                                Action
+                            </DropdownToggle>
+                            <DropdownMenu right>
+                                <DropdownItem>Edit</DropdownItem>
+                                <DropdownItem divider />
+                                <DropdownItem  onClick={this.deleteRecord.bind(this, record)}>Delete</DropdownItem>
+                            </DropdownMenu>
+                            </UncontrolledDropdown>
+                        </Nav>
+                    </>
+                    )
+                }
             }
         ];
         //this.length_menu.unshift(this.state.page_size);
@@ -102,6 +133,7 @@ class Categories extends Component {
             this.loadRecords(payload,true);
         }
     }
+
     updateRecord = (record, index) => {
         //this.props.fadeIn();
         this.setState({status_update:{id:record.id,status:record.status ? false : true}});
@@ -136,16 +168,50 @@ class Categories extends Component {
         );
     }
     tableChangeHandler = data => {
-       // console.log(this.props.authentication.user.limit);
         const payload = {type:2,page:data.page_number,text:data.filter_value,page_size:data.page_size,order_by:data.sort_order.column,order:data.sort_order.order};
-        //console.log(payload);
         this.setState({payload:payload});
         this.loadRecords(payload);
     }
+    deleteRecord = (record) => {
+        console.log(record);
+        this.setState({is_confirm:true,record_delete:record});
+    }
+    onCancel = ()=>{
+        this.setState({is_confirm:false});
+    }
+    onConfirm = (record)=>{
+        console.log(record);
+        this.setState({is_confirm:false,record_delete:[]});
+        const formObj = {id:record.id};
+        const payloadObj = {method:'post','data':formObj,url:'/playlist/delete'};
+        userService.request(payloadObj).then(
+            data => {
+                this.props.error(data.message,'ALERT_SUCCESS','DELETE','toast');
+                this.loadRecords(this.state.payload);
+            },
+            error => {
+                this.props.fadeOut();
+                this.props.error(error,'ALERT_ERROR','DELETE','inline');
+            }
+        );
+    }
 	render() {
-        const { records,total,page_size } = this.state;
+        const { records,total,page_size,is_confirm,record_delete } = this.state;
 		return (
-            <>
+            <> 
+                <SweetAlert
+                warning
+                showCancel
+                confirmBtnText="Yes, delete it!"
+                confirmBtnBsStyle="danger"
+                title="Are you sure?"
+                focusCancelBtn
+                onConfirm={this.onConfirm.bind(this, record_delete)}
+                onCancel={this.onCancel}
+                show={is_confirm}
+                >
+                You will not be able to recover this imaginary file!
+                </SweetAlert>
                     <div className="page-wrapper col-12">
                         <Breadcrumb heading="Categories" title="Category" subtitle="List Categories" />
                         <div className="container-fluid">
