@@ -11,7 +11,7 @@ class ToastError extends Component {
     }
     render() {
         const { alert } = this.props;
-       // console.log(alert);
+        console.log(alert);
        if(alert.mode=='toast' && alert.message){
             if(alert.type=='ALERT_ERROR'){
                 toast.error(alert.message);

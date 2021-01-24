@@ -12,7 +12,7 @@ import { PrivateRoute } from './components/PrivateRoute'
 import { PublicRoute } from './components/PublicRoute';
 import { connect } from 'react-redux';
 import { alertActions,loaderActions } from './actions';
-import {Users, Categories, CreateCategory} from './components';
+import {Users, Categories, CreateCategory,EditCategory} from './components';
 import './App.css';
 import './App.scss';
 import { css } from "@emotion/core";
@@ -103,6 +103,7 @@ class App extends Component {
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
                 <PrivateRoute exact path="/category/list" component={Categories} />
                 <PrivateRoute exact path="/category/create" component={CreateCategory} />
+                <PrivateRoute exact path="/category/:id/edit" component={EditCategory} />
                 <PublicRoute path="/login" component={Login} />
                 <PublicRoute path="/register" component={Register} />
                 <Route component={Error} />

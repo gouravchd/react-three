@@ -17,7 +17,7 @@ import {
     DropdownItem,
   } from 'reactstrap';
 import SweetAlert from 'react-bootstrap-sweetalert';
-
+import { history } from '../../helpers';
 class Categories extends Component {
 
 	constructor(props) {
@@ -93,9 +93,9 @@ class Categories extends Component {
                                 Action
                             </DropdownToggle>
                             <DropdownMenu right>
-                                <DropdownItem>Edit</DropdownItem>
+                                <DropdownItem onClick={this.editRecord.bind(this, record)}>Edit</DropdownItem>
                                 <DropdownItem divider />
-                                <DropdownItem  onClick={this.deleteRecord.bind(this, record)}>Delete</DropdownItem>
+                                <DropdownItem onClick={this.deleteRecord.bind(this, record)}>Delete</DropdownItem>
                             </DropdownMenu>
                             </UncontrolledDropdown>
                         </Nav>
@@ -125,6 +125,7 @@ class Categories extends Component {
     componentDidUpdate(prevProps){
     }
     componentWillReceiveProps (prevProps){
+        //console.log(prevProps);
         if(0 && prevProps.location.key!==this.props.location.key){
             $('input[type=search]').val('');
             $('select[type=text]').prop('selectedIndex',0);
@@ -195,6 +196,10 @@ class Categories extends Component {
             }
         );
     }
+    editRecord = (record)=>{
+        
+        history.replace(`/category/${record.id}/edit`);
+    }
 	render() {
         const { records,total,page_size,is_confirm,record_delete } = this.state;
 		return (
@@ -247,8 +252,8 @@ class Categories extends Component {
 
 }
 function mapState(state) {
-    const { user, authentication,response } = state;
-    return { user, authentication,response };
+    const { user, authentication } = state;
+    return { user, authentication };
 }
 
 const actionCreators = {
