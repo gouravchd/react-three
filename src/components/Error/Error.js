@@ -11,7 +11,7 @@ class Error extends Component {
 		return(
 			<div className="login-register">
 				<div className="card-body">
-					<h1 className="text-center text-warning">Page Not Found</h1>
+					<h1 className="text-center text-warning">Opps!! Page Not Found</h1>
 				</div>
 			</div>
 		)
