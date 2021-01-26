@@ -98,12 +98,12 @@ class App extends Component {
           }
             
               <Switch>
-                <PrivateRoute exact path="/" component={Dashboard} />
-                <PrivateRoute exact path="/users" component={Users} />
-                <PrivateRoute exact path="/dashboard" component={Dashboard} />
-                <PrivateRoute exact path="/category/list" component={Categories} />
-                <PrivateRoute exact path="/category/create" component={CreateCategory} />
-                <PrivateRoute exact path="/category/:id/edit" component={EditCategory} />
+                <PrivateRoute path="/" component={Dashboard} />
+                <PrivateRoute path="/users" component={Users} />
+                <PrivateRoute path="/dashboard" component={Dashboard} />
+                <PrivateRoute path="/category/list" component={Categories} />
+                <PrivateRoute path="/category/create" component={CreateCategory} />
+                <PrivateRoute path="/category/:id/edit" component={EditCategory} />
                 <PublicRoute path="/login" component={Login} />
                 <PublicRoute path="/register" component={Register} />
                 <Route component={Error} />
