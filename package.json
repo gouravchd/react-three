@@ -1,6 +1,5 @@
 {
   "name": "three",
-  "homepage": "https://gouravchd.github.io/react-three",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
