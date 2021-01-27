@@ -218,7 +218,7 @@ class Categories extends Component {
                 You will not be able to recover this imaginary file!
                 </SweetAlert>
                     <div className="page-wrapper col-12">
-                        <Breadcrumb heading="Categories" title="Category" subtitle="List Categories" />
+                        <Breadcrumb heading="Categories" title="Category New" subtitle="List Categories New" />
                         <div className="container-fluid">
                             <Error />
                             <div className="row">
